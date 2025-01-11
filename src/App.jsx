@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Admin from "./Admin";
+
 
 const App = () => {
   const [formData, setFormData] = useState({
@@ -36,6 +38,7 @@ const App = () => {
         onSubmit={handleSubmit}
         style={{
           backgroundColor: "white",
+
           padding: "20px",
           borderRadius: "8px",
           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
@@ -43,7 +46,9 @@ const App = () => {
           width: "100%"
         }}
       >
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Feedback Form</h1>
+        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Va multumim pentru feedback!</h2>
+		
+		<p> Va rugam completati urmatoarele rubrici: </p>
 
         {/* Question 1 */}
         <div style={{ marginBottom: "20px" }}>
@@ -124,7 +129,7 @@ const App = () => {
         >
           Submit
         </button>
-      </form>
+      </form>  
     </div>
   );
 };
