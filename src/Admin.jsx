@@ -23,7 +23,7 @@ const Admin = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://4wpyqi1ta9.execute-api.eu-central-1.amazonaws.com/review", {
+      const response = await fetch("https://4wpyqi1ta9.execute-api.eu-central-1.amazonaws.com/work", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

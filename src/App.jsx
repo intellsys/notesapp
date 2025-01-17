@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import Admin from "./Admin";
 
 
 const App = () => {
+  const { id } = useParams(); // Get the `id` from the URL
   const [formData, setFormData] = useState({
-    question1: "",
-    question2: "",
-    question3: ""
+    timp: "",
+    calitate: "",
+    observatii: "",
+	workId: id || "" // Set the `id` in the form data, fallback to empty if not present
   });
 
   const handleChange = (e) => {
@@ -17,11 +20,30 @@ const App = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    alert("Form submitted! Check the console for details.");
-  };
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      try {
+        const response = await fetch("https://4wpyqi1ta9.execute-api.eu-central-1.amazonaws.com/review", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData), // Send form data
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to submit the form");
+        }
+
+        const result = await response.json();
+        console.log("Success:", result);
+        alert("Review request submitted successfully!");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to submit the form.");
+      }
+    };
 
   return (
     <div
@@ -60,10 +82,10 @@ const App = () => {
               <label key={index}>
                 <input
                   type="radio"
-                  name="question1"
+                  name="timp"
                   value={index + 1}
                   onChange={handleChange}
-                  checked={formData.question1 === String(index + 1)}
+                  checked={formData.timp === String(index + 1)}
                 />
                 {index + 1}
               </label>
@@ -81,10 +103,10 @@ const App = () => {
               <label key={index}>
                 <input
                   type="radio"
-                  name="question2"
+                  name="calitate"
                   value={index + 1}
                   onChange={handleChange}
-                  checked={formData.question2 === String(index + 1)}
+                  checked={formData.calitate === String(index + 1)}
                 />
                 {index + 1}
               </label>
@@ -94,14 +116,14 @@ const App = () => {
 
         {/* Question 3 */}
         <div style={{ marginBottom: "20px" }}>
-          <label htmlFor="question3" style={{ display: "block", marginBottom: "10px" }}>
+          <label htmlFor="observatii" style={{ display: "block", marginBottom: "10px" }}>
 			Q3: Mai aveti ceva de adaugat?
           </label>
           <input
             type="text"
-            id="question3"
-            name="question3"
-            value={formData.question3}
+            id="observatii"
+            name="observatii"
+            value={formData.observatii}
             onChange={handleChange}
             style={{
               width: "100%",
